@@ -1,9 +1,8 @@
 package de.supercode.friends.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.Date;
 
 @Entity
 public class Friend {
@@ -21,7 +20,10 @@ public class Friend {
     private boolean istSelbständig;
     private boolean warSchonmalKunde;
 
-
+    @JsonIgnoreProperties("friends")
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private FriendGroup group;
     // Constructors
     public Friend() {}
 
@@ -118,4 +120,11 @@ public class Friend {
     }
 
 
+    public void setGroup(FriendGroup group) {
+        this.group = group;
+    }
+
+    public FriendGroup getGroup() {
+        return group;
+    }
 }
